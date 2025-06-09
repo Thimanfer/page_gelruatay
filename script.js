@@ -145,5 +145,44 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Image Slider Animation
+function initImageSlider() {
+    const images = document.querySelectorAll('.product-images-slider img');
+    let currentIndex = 0;
+
+    // Position all images off-screen except the first one
+    images.forEach((img, index) => {
+        if (index === 0) {
+            img.style.transform = 'translateX(0%)';
+        } else {
+            img.style.transform = 'translateX(100%)'; /* Initially off-screen to the right */
+        }
+        img.style.transition = 'transform 1s ease-in-out';
+    });
+
+    function showNextImage() {
+        images[currentIndex].style.transform = 'translateX(-100%)'; /* Slide current out to left */
+        images[currentIndex].style.opacity = '0'; /* Make it invisible quickly after sliding */
+
+        currentIndex = (currentIndex + 1) % images.length;
+
+        images[currentIndex].style.transform = 'translateX(100%)'; /* Position next image off-screen right */
+        images[currentIndex].style.opacity = '1'; /* Make it visible before sliding in */
+
+        // Force a reflow to ensure the transform takes effect before animating
+        void images[currentIndex].offsetWidth;
+
+        images[currentIndex].style.transform = 'translateX(0%)'; /* Slide next image into view */
+    }
+
+    // Change image every 3 seconds
+    setInterval(showNextImage, 3000);
+}
+
+// Initialize all animations when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    initImageSlider();
+});
+
 
 
