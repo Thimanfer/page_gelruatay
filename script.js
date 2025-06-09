@@ -175,6 +175,7 @@ function initImageSlider() {
         images[currentIndex].style.transform = 'translateX(0%)'; /* Slide next image into view */
     }
 
+    
     // Change image every 3 seconds
     setInterval(showNextImage, 3000);
 }
