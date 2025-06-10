@@ -459,6 +459,7 @@ section:hover {
     margin: 0;
     border-radius: 15px;
     box-shadow: var(--shadow-medium);
+    overflow: hidden; /* Prevent overflow on mobile */
 }
 
 .benefits .section-title {
@@ -471,22 +472,23 @@ section:hover {
     justify-content: center;
     align-items: center;
     position: relative;
-    padding: 20px;
+    padding: 0;
     border-radius: 50%;
-    width: 800px; /* Reduced from 4000px to 800px */
-    height: 800px; /* Reduced from 4000px to 800px */
+    width: min(800px, 90vw);
+    height: min(800px, 90vw);
     margin: 0 auto;
     background: linear-gradient(145deg, #e0f7fa, #b2ebf2 60%);
     box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.05), var(--shadow-medium);
     animation: none;
-    border: 2px solid var(--primary-color);
+    border: 1px solid var(--primary-color); /* Thinner border */
     transform-style: preserve-3d;
+    --benefits-layout-radius: calc(min(800px, 90vw) / 2);
 }
 
 .benefits-image-circular {
     display: flex;
-    width: 180px;
-    height: 180px;
+    width: calc(var(--benefits-layout-radius) * 0.4); /* Larger central image */
+    height: calc(var(--benefits-layout-radius) * 0.4); /* Larger central image */
     border-radius: 50%;
     overflow: hidden;
     justify-content: center;
@@ -525,55 +527,56 @@ section:hover {
     position: absolute;
     background-color: var(--white);
     border-radius: 50%;
-    padding: 20px;
+    width: calc(var(--benefits-layout-radius) * 0.28); /* Larger benefit items */
+    height: calc(var(--benefits-layout-radius) * 0.28); /* Larger benefit items */
+    padding: calc(var(--benefits-layout-radius) * 0.028); /* Adjusted proportional padding */
     text-align: center;
     box-shadow: var(--shadow-medium);
     transition: var(--transition-medium);
-    width: 120px;
-    height: 120px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     border: 3px solid var(--primary-color);
     transform-origin: 50% 50%;
+    z-index: 2;
 }
 
 .benefit-item-circular:nth-child(1) {
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) translateY(-380px);
+    transform: translate(-50%, -50%) translateY(calc(-1 * var(--benefits-layout-radius) * 0.6));
 }
 
 .benefit-item-circular:nth-child(2) {
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) rotate(120deg) translateY(-380px);
+    transform: translate(-50%, -50%) rotate(120deg) translateY(calc(-1 * var(--benefits-layout-radius) * 0.6));
 }
 
 .benefit-item-circular:nth-child(3) {
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) rotate(240deg) translateY(-380px);
+    transform: translate(-50%, -50%) rotate(240deg) translateY(calc(-1 * var(--benefits-layout-radius) * 0.6));
 }
 
 .benefit-item-circular:hover {
     animation: none;
-    transform: translate(-50%, -50%) scale(1.1) translateY(-380px);
+    transform: translate(-50%, -50%) scale(1.1) translateY(calc(-1 * var(--benefits-layout-radius) * 0.6));
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
     border-color: var(--secondary-color);
 }
 
 .benefit-item-circular img {
-    width: 60px;
-    height: 60px;
+    width: calc(var(--benefits-layout-radius) * 0.112); /* Adjusted proportional image size */
+    height: calc(var(--benefits-layout-radius) * 0.112); /* Adjusted proportional image size */
     object-fit: contain;
-    margin-bottom: 10px;
+    margin-bottom: calc(var(--benefits-layout-radius) * 0.0112); /* Adjusted proportional margin */
     transition: var(--transition-fast);
 }
 
 .benefit-item-circular p {
-    font-size: 1.2em;
+    font-size: calc(var(--benefits-layout-radius) * 0.021); /* Adjusted proportional font size */
     font-weight: 700;
     color: var(--primary-color);
     line-height: 1.4;
@@ -962,18 +965,25 @@ section:hover {
     justify-content: center;
     gap: 40px; /* Increased gap */
     padding: 20px 0;
+    align-items: stretch; /* Ensure all items stretch to the same height */
 }
 
 .commitment-item {
     background-color: var(--light-bg);
     border-radius: 20px;
-    padding: 30px 25px;
+    padding: 20px 25px;
     text-align: center;
     box-shadow: var(--shadow-light);
     transition: var(--transition-medium);
-    max-width: 320px;
-    flex: 1 1 280px;
+    max-width: 300px;
+    flex: 1 1 250px;
     border: 2px solid var(--primary-color);
+    height: 240px; /* Increased fixed height for better content fit */
+    overflow: hidden; /* Hide overflowing content */
+    display: flex; /* Ensure flex container for centering content */
+    flex-direction: column; /* Stack content vertically */
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
 }
 
 .commitment-item:hover {
@@ -996,7 +1006,7 @@ section:hover {
 }
 
 .commitment-item p {
-    font-size: 1.15em;
+    font-size: 1em; /* Further reduced font size for fixed height */
     color: var(--text-color);
     line-height: 1.6;
     font-weight: 500;
@@ -1234,7 +1244,7 @@ footer .container {
 /* Responsive Design */
 @media (max-width: 900px) {
     .container {
-        max-width: 100%;
+        max-width: 95%;
         padding: 0 8px;
     }
     .main-header-container {
@@ -1266,16 +1276,6 @@ footer .container {
     .details-text {
         max-width: 100%;
     }
-    .benefits-layout-circular {
-        flex-direction: column;
-        gap: 20px;
-    }
-    .benefits-image-circular {
-        max-width: 90vw;
-    }
-    .benefits-items-container-circular {
-        max-width: 100%;
-    }
     .ingredients-list {
         flex-direction: column;
         gap: 16px;
@@ -1300,9 +1300,7 @@ footer .container {
         max-width: 95vw;
     }
     .commitment-list {
-        flex-direction: column;
         gap: 16px;
-        align-items: center;
     }
     .commitment-item {
         max-width: 95vw;
@@ -1389,7 +1387,7 @@ footer .container {
         padding: 10px 10px;
     }
     .container {
-        padding: 0 2px;
+        padding: 0 5px; /* Adjusted padding for better responsiveness */
     }
     section,
     .ingredients,
@@ -1399,6 +1397,23 @@ footer .container {
     .commitment {
         padding: 14px 0 14px 0;
         scroll-margin-top: 90px;
+    }
+}
+
+@media (max-width: 400px) {
+    .order-form-box {
+        max-width: 95vw;
+        padding: 12px;
+    }
+    .order-form form input[type="text"],
+    .order-form form input[type="email"],
+    .order-form form input[type="tel"] {
+        font-size: 1em;
+        padding: 12px;
+    }
+    .order-form form button[type="submit"] {
+        font-size: 1em;
+        padding: 12px;
     }
 }
 
@@ -1562,3 +1577,4 @@ html {
     left: 0;
     transition: transform 1s ease-in-out;
 }
+
